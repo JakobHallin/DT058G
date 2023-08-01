@@ -1,42 +1,56 @@
 <?php
-
+/**
+ * class Stock
+ */
 class Stock{
-//måste see till amount är int
-private $amount; //varierar beronde på vilket konto
-//kanske bara behöver en ID eller name
-private $id;  //alla av samma aktie ska ha samma namn 
-//private $aktieID; //alla av samma aktie ska ha denna
+	private $amount; //int
+	private $id; //int
+	/** 
+	 * Construct the stock that the account holds
+	 * 
+	 * @param int $id
+	 * @param int $amount 
+	 */  
 	function __construct($id, $amount) {
 		$this->setID($id);
 		$this->setAmount($amount);
 	
 	}  
+	/**
+	 * Sets the id of the stock
+	 * @param int $id
+	 */
 	public function setID($id) {  // a public function (default)
 		$this->id = $id;
 	   }
-	   public function setAmount($n) {  // a public function (default)
+	/**
+	 * Sets the amount of the stock
+	 * @param int $n
+	 */
+	public function setAmount($n) {  // a public function (default)
 		$this->amount = $n;
-	   }
-	 
-	   public function getAmount(){
+	}
+	/**
+	 * gets the amount of the stock
+	 * @return int 
+	 */
+	public function getAmount(){
 	   return $this->amount;
-	   }
-	  
-	  public function getID(){
-//	  echo "getID";
+	}
+	/**
+	 * gets the id of the stock
+	 * @return int
+	 */  
+	public function getID(){
 	  return $this->id;
-	  }
-
+	}
+	/**
+	 * add number of the stock
+	 * @param int $number
+	 */
 	public function addAmount($number){
-	 //echo "add amount";
 	 $this->amount = $this->amount + $number;
 	}
-	
 }
-/*$a1 = new Stock("apple", 3);
-echo "hi";
-$a1->addAmount(3);
-echo $a1->getAmount();
-echo "hi";
-*/
 ?>
+

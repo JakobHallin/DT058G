@@ -4,9 +4,11 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 spl_autoload_register(function ($class) {
     include 'classes/' . $class . '.class.php';
+   
 });
-error_reporting(E_ALL);
 
+error_reporting(E_ALL);
+ include ("config/config.php");
 	session_start();
 	
 
@@ -15,13 +17,15 @@ error_reporting(E_ALL);
 		
 		$username = $_REQUEST["user"];
 		$pass = $_REQUEST["pass"];
-	
-	$db = new Database();
+		
+		$hashpass = hash("ripemd160", $pass);
+		// "test" "123" is the difrent password
+	//$db = new Database();
 	
 
 	
-	$sql ="SELECT * FROM User WHERE UserID = '".$username. "' AND Password = '" .$pass."';";
-	$result = $db->executeReturn($sql);
+	$sql ="SELECT * FROM User WHERE UserID = '".$username. "' AND Password = '" .$hashpass."';";
+	$result = $db->execute($sql);
     		
     		
 	//print_r ($sql);
@@ -50,6 +54,7 @@ error_reporting(E_ALL);
 	<title>Document</title>
 </head>
 <body>
+ 
 	<form id="formid" method="post" action="<?=$_SERVER['PHP_SELF'];?>">
 		Användare:
 		<input type="text" name="user" id="user" autocomplete="off" placeholder="Ange användarnamn" >

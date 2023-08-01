@@ -1,44 +1,43 @@
 <?php
-
+/**
+ * class account
+ */
 class Account extends Database {
    
-   	private $con;
-   	private $id;
+   	private $con; //connection to database
+   	private $id; //int
     	private $balance;  //float
     	private $holding = []; // array
-     	function __construct($id, $balance) { //bra
-		$this->id = $id;          
-          	$this->balance= $balance; 
-            	
-           
-		$sql = "SELECT * FROM Stock WHERE AccountID= '" .$id ."'";
-	
-	 	$stmt = parent::executeReturn($sql);
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	
-      		$this->addStock( new Stock($row['StocksID'],  $row["Amount"]));
-      
-    		}
-        
-        }  
+		/** 
+		 * constructor
+		 */
+     	function __construct($id, $balance) {
+			$this->id = $id;          
+          	$this->balance= $balance;
+			//get all the stocks from the database that are related to this account 
+			$sql = "SELECT * FROM Stock WHERE AccountID= '" .$id ."'";
+	 		$stmt = parent::execute($sql); 
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+	      		$this->addStock( new Stock($row['StocksID'],  $row["Amount"]));  
+    			}
+        	}  
+	/**
+	 * get size
+	 * @return int
+	 */
         public function getSize(){
 		return sizeof($this->holding);
-	} 
+		} 
       	public function getStockID($index){
-      		
-      		//echo $index;
-      		$var = $this->holding[$index]->getID();
-      		//echo "after var". $var;
       		return $this->holding[$index]->getID();
       	}
       	public function getStockAmount($index){
       		return $this->holding[$index]->getAmount();
       	}
-        public function setBalance($n) {  // a public function (default)
+        public function setBalance($n) {  
            	$this->balance = $n;
         }
-        public function addStock($stock) {  // a public function (default)
-           
+        public function addStock($stock) {  
             	array_push($this->holding, $stock);
          }
          public function getID(){
@@ -51,41 +50,51 @@ class Account extends Database {
            public function getHolding(){
             return $this->holding;
            }
-          
-          public function addBalance($totalprice){ //se till att det bara är posetivt
-         //add sql
+          /**
+		   * add balance to the account
+		   * @param float $totalprice
+		   */
+          public function addBalance($totalprice){ 
           $this->balance = $this->balance + $totalprice;
           $accountID = $this->getID();
+		  //making sure to let the database do de logic of the addion
           $sql = "UPDATE Accounts SET Balance = (SELECT Balance FROM Accounts WHERE AccountID = $accountID) + $totalprice WHERE AccountID = $accountID"; 
-          parent::prepareSqlExecte($sql);
+          parent::execute($sql);
           }
           
-          
-           public function removeFromBalance($totalprice){
+    	/**
+		 * remove balance to the account
+		 * @param float $totalprice
+		 */
+        public function removeFromBalance($totalprice){
            $this->balance = $this->balance - $totalprice;
           	$accountID = $this->getID();
            	$sql = "UPDATE Accounts SET Balance = (SELECT Balance FROM Accounts WHERE AccountID = $accountID) - $totalprice WHERE AccountID = $accountID"; 
-                // kanske göra preparemethod prepare($sql){$stmt = con->prepare; stmt->execute();
-            	parent::prepareSqlExecte($sql);
-                //
-            }
-     
-        public function updateStockHolding($stockID , $stockAmount){
-        $accountID = $this->getID();
-          $sql = "UPDATE Stock SET Amount = $stockAmount WHERE StocksID = $stockID AND AccountID = $accountID "; 
-                    parent::prepareSqlExecte($sql);
-        
-        }
-              public function insertNewStock($StockId, $amount){
-               		$sql = "INSERT INTO `Stock`(`StocksID`, `AccountID`, `Amount`) VALUES (?,?,?)";
-                    	
-                    	$id = $this->getID();
-                    	
-                    	parent::insertSql($sql, $StockId, $id, $amount);
-                
-                    }
               
-                    
+            	parent::execute($sql);
+
+        }
+		/**
+		 * update the sockholding //mabye change name to change
+		 * @param int $stockID
+		 * @param int $stockAmount
+		 */
+        public function updateStockHolding($stockID , $stockAmount){
+        	$accountID = $this->getID();
+			//logicen bör vara sql inte något annat -------------------------------------------------------------------------
+        	$sql = "UPDATE Stock SET Amount = $stockAmount WHERE StocksID = $stockID AND AccountID = $accountID "; 
+        	parent::execute($sql);
+        }
+		/**
+		 * insert new stock to account
+		 * @param int $stockID
+		 * @param int $amount
+		 */
+        public function insertNewStock($StockId, $amount){
+            $sql = "INSERT INTO `Stock`(`StocksID`, `AccountID`, `Amount`) VALUES (?,?,?)";
+            $id = $this->getID();
+            parent::insert($sql, $StockId, $id, $amount);
+        }            
            public function changeHolding($index, $amount){ //bra
            
            $this->holding[$index]->addAmount($amount);
@@ -95,17 +104,17 @@ class Account extends Database {
               $this->updateStockHolding($stockID, $stockAmount);
               
            }
-           public function getPrice($StockID){ //Lite oäkervart denna funktion bör ligga
+           public function getPrice($StockID){ //Lite oäkervart denna funktion bör ligga--------------------------------------------------------TA BORT använd parent
           
           //fetcha stockförkortning
           	$shortName ='';
           	
 		$sql = "SELECT * FROM AllStocks WHERE StocksID= '" .$StockID ."'";
-		$stmt = parent::executeReturn($sql);
+		$stmt = parent::execute($sql);
 	
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$shortName= $row['Short'];
-			//echo $shortName;
+			
 	 	}
 
 		
@@ -116,8 +125,7 @@ class Account extends Database {
            public function buyStock($StockId, $amount){ //måste se till att bara mina värden på aktie id
         
         //cheack if it exist
-           //echo '</br>' . "amount in account=". $amount;
-           //echo "flag";
+       
                 $flag = "false";
                 foreach($this->holding as $key => $value) //blir stock 
                 {
@@ -128,7 +136,7 @@ class Account extends Database {
                         $prep = $this->getPrice($StockId);
                         $prep = $amount * $prep;
                         if($this->getBalance() > $prep){
-                        //echo "biger";
+                       
                     //måste checka om det funkar om balance är störe än prep * amount
                     
                         $this->changeHolding($key, $amount);
@@ -137,15 +145,11 @@ class Account extends Database {
                   $this->removeFromBalance($prep);
                         
                         }
-                        //else echo "</br>". "TO LOW!!!!";
-                       
                     }
-                    //echo "no";
                 }
-               // echo "hi"; 
                 if ($flag == "false"){
                 	
-                    $prep = $this->getPrice($StockId);
+                    $prep = $this->getPrice($StockId); //fixa
  			$prep= $amount * $prep;
  			//checkin if balance is bigger then prep
                      if($this->getBalance() >$prep){
@@ -155,8 +159,6 @@ class Account extends Database {
                     
                     	$stock = new Stock($StockId, $amount);
                     
-                    	//echo "new stock AMount =". $amount;
-                    	//echo "</br>" . $stock->getAmount();
                     	$this->addStock($stock);
                     	//insert new stock sql
                 	$this->insertNewStock($StockId, $amount);
@@ -164,29 +166,26 @@ class Account extends Database {
                  	$this->removeFromBalance($prep);
                     
                     }
-             //       else echo "</br>". "TO LOW!!!!";
+             
                 }
-           }
+           } 
+           /**
+            *
+            **/
             public function sellStock($StockID, $amount){
             //get amount of the stock see if there is not negativ amount
             		//
-            		$curentAmount = 0;
-            		$id = $this->getID();
-            	
-		$sql = "SELECT Amount FROM Stock WHERE StocksID= '" .$StockID."' AND AccountID = '" .$id."'";
-	 
-		$stmt = parent::executeReturn($sql);
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$curentAmount = $row['Amount'];
-		
-	 	}
-            	
+            	$curentAmount = 0;
+            	$id = $this->getID();
+				$sql = "SELECT Amount FROM Stock WHERE StocksID= '" .$StockID."' AND AccountID = '" .$id."'"; 
+				$stmt = parent::execute($sql);
+				while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+				$curentAmount = $row['Amount'];
+				}
             	if ($curentAmount >= $amount){
-            	 
-            	// echo "account bigger";
             	 //sql add balance
-            	 $price = $this->getPrice($StockID);     //209
-  			$totalPrice = $price * $amount; 
+            		$price = $this->getPrice($StockID);     //bra 
+  					$totalPrice = $price * $amount; 
   			
   			$this->addBalance($totalPrice);
   			          	 
@@ -199,18 +198,9 @@ class Account extends Database {
                 	{
                 		if ($StockID == $value->getID()){
                 			$value->setAmount($newAmount);
-                		
-                		
-                		
-                		}
-                	
+                		}              	
                 	}
-            	}
-            		
-            		
-            	
-            }
-       
+            	}            	
+            }      
 }
-
 ?>

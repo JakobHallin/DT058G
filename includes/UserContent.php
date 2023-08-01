@@ -43,8 +43,8 @@ $size = $user->getSize();
 
 ?> 
 <div class="user">
-<h2> <?php echo $username ?> </h2>
-<p> <?php echo "Accounts=" .$size ."</br>"; ?> </p> 
+<h1> <?php echo $username ?> </h1>
+<h2> <?php echo "Number of accounts " .$size ."</br>"; ?> </h2> 
 <?php
 
 for ($i=0; $i<$size; $i++){
@@ -59,8 +59,8 @@ for ($i=0; $i<$size; $i++){
 	$amountStock = " Amount of diffrent stocks:". $stockSize;
 	?>  
 	
-	<p> <?php  echo $acountinfo?> </p>
-	<p> <?php echo $amountStock ?> </p> 
+	<h3> <?php  echo $acountinfo?> </h3>
+	<h4> <?php echo $amountStock ?> </h4> 
 	<?php
 	
 	
