@@ -1,6 +1,9 @@
 <?php
 
-class User extends Database{
+/*
+ * respondibale for accounts
+ */
+class User{
    
     private $Accounts = []; // array av accounts
         
@@ -9,8 +12,9 @@ class User extends Database{
       
             
 	$sql = "SELECT * FROM Accounts WHERE UserID = '" .$userID ."'";
-
-	$stmt = parent::execute($sql);
+	$classSql = new Sql;
+	$stmt = $classSql->execute($sql);
+	//$stmt = parent::execute($sql);
 	
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
@@ -70,11 +74,12 @@ class User extends Database{
             return $this->Accounts[$index]->getBalance();
            
             }
-      	//kolla om stockIndex finns
+      	//onödig finns inte i respondibale
   	public function stockExist($id){
   		$sql = "Select * FROM AllStocks WHERE StocksID= $id";
-  		
-                $stmt = parent::execute($sql);
+  		$classSql = new Sql;
+		$stmt = $classSql->execute($sql);
+                //$stmt = parent::execute($sql);
                 
   		$count = $stmt->rowCount();
 

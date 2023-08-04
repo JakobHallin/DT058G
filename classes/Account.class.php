@@ -1,9 +1,10 @@
 <?php
 /**
  * class account
+ * responsibale for buying selling stocks
  */
-class Account extends Database {
-   
+class Account  {
+  
    	private $con; //connection to database
    	private $id; //int
     	private $balance;  //float
@@ -16,7 +17,9 @@ class Account extends Database {
           	$this->balance= $balance;
 			//get all the stocks from the database that are related to this account 
 			$sql = "SELECT * FROM Stock WHERE AccountID= '" .$id ."'";
-	 		$stmt = parent::execute($sql); 
+	 		$classSql = new Sql;
+	 		$stmt = $classSql->execute($sql);
+	 		 
 			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	      		$this->addStock( new Stock($row['StocksID'],  $row["Amount"]));  
     			}
@@ -59,7 +62,10 @@ class Account extends Database {
           $accountID = $this->getID();
 		  //making sure to let the database do de logic of the addion
           $sql = "UPDATE Accounts SET Balance = (SELECT Balance FROM Accounts WHERE AccountID = $accountID) + $totalprice WHERE AccountID = $accountID"; 
-          parent::execute($sql);
+          
+          	$classSql = new Sql;
+	 	$stmt = $classSql->execute($sql);
+          
           }
           
     	/**
@@ -71,7 +77,8 @@ class Account extends Database {
           	$accountID = $this->getID();
            	$sql = "UPDATE Accounts SET Balance = (SELECT Balance FROM Accounts WHERE AccountID = $accountID) - $totalprice WHERE AccountID = $accountID"; 
               
-            	parent::execute($sql);
+            	$classSql = new Sql;
+	 	$stmt = $classSql->execute($sql);
 
         }
 		/**
@@ -83,7 +90,8 @@ class Account extends Database {
         	$accountID = $this->getID();
 			//logicen bör vara sql inte något annat -------------------------------------------------------------------------
         	$sql = "UPDATE Stock SET Amount = $stockAmount WHERE StocksID = $stockID AND AccountID = $accountID "; 
-        	parent::execute($sql);
+        	$classSql = new Sql;
+	 	$stmt = $classSql->execute($sql);
         }
 		/**
 		 * insert new stock to account
@@ -93,7 +101,9 @@ class Account extends Database {
         public function insertNewStock($StockId, $amount){
             $sql = "INSERT INTO `Stock`(`StocksID`, `AccountID`, `Amount`) VALUES (?,?,?)";
             $id = $this->getID();
-            parent::insert($sql, $StockId, $id, $amount);
+            
+            	$classSql = new Sql;
+	 	$stmt = $classSql->insert($sql, $StockId, $id, $amount);
         }            
            public function changeHolding($index, $amount){ //bra
            
@@ -104,21 +114,24 @@ class Account extends Database {
               $this->updateStockHolding($stockID, $stockAmount);
               
            }
-           public function getPrice($StockID){ //Lite oäkervart denna funktion bör ligga--------------------------------------------------------TA BORT använd parent
+           public function getPrice($StockID){ //tar id kollar får shortname
           
           //fetcha stockförkortning
           	$shortName ='';
           	
 		$sql = "SELECT * FROM AllStocks WHERE StocksID= '" .$StockID ."'";
-		$stmt = parent::execute($sql);
+		
+		$classSql = new Sql;
+		$stmt = $classSql->execute($sql);
 	
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$shortName= $row['Short'];
 			
 	 	}
 
+		$api = new Api;
 		
-		return floatval(parent::fetchPrice($shortName));
+		return floatval($api->getPrice($shortName));
 	
 	 }
            //ska ta bort balance efter köp
@@ -178,7 +191,9 @@ class Account extends Database {
             	$curentAmount = 0;
             	$id = $this->getID();
 				$sql = "SELECT Amount FROM Stock WHERE StocksID= '" .$StockID."' AND AccountID = '" .$id."'"; 
-				$stmt = parent::execute($sql);
+				$classSql = new Sql;
+				$stmt = $classSql->execute($sql);			
+				//$stmt = parent::execute($sql);
 				while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 				$curentAmount = $row['Amount'];
 				}

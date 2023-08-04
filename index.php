@@ -2,6 +2,7 @@
 declare(strict_types=1); // Check for type cast problems
 error_reporting(E_ALL); // Report and exit for all errors
 require ("includes/load.php");
+$title = "hem";
 
 $username = $_SESSION["user"];
 spl_autoload_register(function ($class) {
@@ -10,16 +11,11 @@ spl_autoload_register(function ($class) {
 
 ?>
 <html>
-	<head>
-	<link rel="stylesheet" href="css/style.css">
-    	</head>
-    	<body>
-    	<header>
-    	<h1> Aktier </h1>
-    	</header>
-        <section>
-        <?php include ("includes/UserContent.php"); ?>
-  	<?php include ("includes/stockInfo.php");?>
+	<?php include("includes/head.php"); //head ?>
+    	<?php include("includes/header.php"); //header ?>
+        
+        <?php include ("includes/UserContent.php"); //content ?>
+  	<?php  include ("includes/stockInfo.php"); //content ?>
  	
 	<div class="container"> 	
  		
@@ -32,12 +28,7 @@ spl_autoload_register(function ($class) {
     			</form>
     		</div>
     	</div>
-    	</section>
- 	
- 	<div class="footer"> 
- 	<h2> footer </h2>
- 	</div>
- 	
-
-</body>
+    	
+    	
+    	<?php include("includes/footer.php"); //footer ?>
 </html>

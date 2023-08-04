@@ -3,10 +3,11 @@
 	
 
 	 function StockInfo(){     
-    	$db = new Database();
+    	//$db = new Database();
     	$sql = "SELECT * FROM AllStocks";
-	
-	$result  = $db->execute($sql);
+	$classSql = new Sql;
+	$result = $classSql->execute($sql);
+	//$result  = $db->execute($sql);
     	?>
     	<div class="table" id = "table"> 
     		<div class="row">
@@ -30,8 +31,8 @@
 			
 				$stockName= $row['StockName'];
 				$shortName= $row['Short'];
-			
-			$price = $db->fetchPrice($shortName)
+			$api = new Api;
+			$price = $api->getPrice($shortName)
 					// id Id="<?php echo $shortName;
 					?> 
 				

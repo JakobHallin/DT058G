@@ -7,8 +7,10 @@ spl_autoload_register(function ($class) {
    
 });
 
+$title = "login";
+
 error_reporting(E_ALL);
- include ("config/config.php");
+ //$db = new Db;
 	session_start();
 	
 
@@ -25,7 +27,10 @@ error_reporting(E_ALL);
 
 	
 	$sql ="SELECT * FROM User WHERE UserID = '".$username. "' AND Password = '" .$hashpass."';";
-	$result = $db->execute($sql);
+	$classSql = new Sql;
+	echo "test";
+	$result = $classSql->execute($sql);
+	//$result = $db->execute($sql);
     		
     		
 	//print_r ($sql);
@@ -47,14 +52,9 @@ error_reporting(E_ALL);
 ?>
 <!DOCTYPE html>
 <html lang="sv">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-</head>
-<body>
- 
+<?php include("includes/head.php"); ?>
+
+<?php include("includes/header.php"); ?>
 	<form id="formid" method="post" action="<?=$_SERVER['PHP_SELF'];?>">
 		Användare:
 		<input type="text" name="user" id="user" autocomplete="off" placeholder="Ange användarnamn" >
@@ -76,6 +76,6 @@ error_reporting(E_ALL);
         	return true;
     	}) 
 	</script>
-</body>
+	<?php include("includes/footer.php"); ?>
 </html>
 
