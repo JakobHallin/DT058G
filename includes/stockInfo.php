@@ -7,7 +7,7 @@
     	$sql = "SELECT * FROM AllStocks";
 	$classSql = new Sql;
 	$result = $classSql->execute($sql);
-	//$result  = $db->execute($sql);
+	
     	?>
     	<div class="table" id = "table"> 
     		<div class="row">
