@@ -4,15 +4,78 @@ box-sizing: border-box;
 
 header
 {
-position: fixed;
-background-color: lightgreen;
-padding-bottom: 10px;
-padding-top: 10px;
+	position: fixed;
+	background-color: lightgreen;
+	padding-bottom: 10px;
+	padding-top: 10px;
 
 	width: 100%;
 	left: 0;
 	top: 0;
 
+}
+section {
+	margin-left: 10%;
+	margin-right: 10%;
+	padding-top: 100px;
+	
+	padding-bottom: 10px;
+}
+
+
+
+
+
+.table{
+	padding-bottom: 10px;
+	margin-bottom: 15px;
+}
+.row{
+	padding-top: 40px;
+}
+.price {
+  	float: left;
+  	width: 33.33%;
+  	padding: 0px;
+  	height: 30px; 
+
+}
+
+.column {
+  	float: left;
+  	width: 33.33%;
+  	padding: 0px;
+  	height: 30px; 
+
+}
+.container{
+	padding-top: 100px;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 50px;
+
+	
+}
+
+.box{
+	 position: absolute;
+	padding-top: 50px;
+	height: 250px;
+	top: 50%;
+	left: 50%;
+	 text-align: center;
+	transform: translate(-50%, -50%);
+	border: 2px solid black;
+	background:#C0C0C0;
+	width: 33%;
+	
+}
+button{
+	margin-bottom: 10px;
+}
+input {
+  width: 100px;
+  
 }
 .footer {
 	position: fixed;   
@@ -22,46 +85,4 @@ padding-top: 10px;
    background-color: black;
    color: white;
    text-align: center;
-}
-section {
-	margin-left: 10%;
-	margin-right: 10%;
-	padding-top: 100px;
-	
-	padding-bottom: 10px;
-}
-.table{
-padding-bottom: 10px;
-margin-bottom: 15px;
-}
-.row{
-	padding-top: 40px;
-}
-.price {
-  float: left;
-  width: 33.33%;
-  padding: 0px;
-  height: 30px; 
-
-}
-
-.column {
-  float: left;
-  width: 33.33%;
-  padding: 0px;
-  height: 30px; 
-
-}
-.container{
-padding-top: 100px;
-padding-bottom: 10px;
-margin-top: 10px;
-margin-bottom: 50px;
-}
-button{
-margin-bottom: 10px;
-}
-input {
-  width: 100px;
-  
 }

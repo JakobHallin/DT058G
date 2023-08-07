@@ -20,10 +20,11 @@ class Db{
 		 return $con;
 	
 	}
-	//osäker
+	/*osäker
 	public function close($con) 
 		$con->close();
 	}
+	*/
 }
 	
 ?>
