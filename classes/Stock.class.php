@@ -1,6 +1,7 @@
 <?php
 /**
  * class Stock
+ * responsibale for stock
  */
 class Stock{
 	private $amount; //int

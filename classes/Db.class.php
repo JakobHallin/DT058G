@@ -1,6 +1,6 @@
 <?php
 /*
- * resposnibale for sql execution
+ * resposnibale for database connection
  */
 class Db{
 

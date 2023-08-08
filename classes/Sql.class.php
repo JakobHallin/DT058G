@@ -1,6 +1,6 @@
 <?php
 /*
- * resposnibale for sql execution
+ * resposnibale for sql quarys
  */
 class Sql{
 

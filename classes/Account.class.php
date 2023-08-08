@@ -1,7 +1,7 @@
 <?php
 /**
  * class account
- * responsibale for buying selling stocks
+ * responsibale for account buying selling stocks
  */
 class Account  {
   
@@ -60,7 +60,7 @@ class Account  {
          public function addBalance($totalprice){ 
          	$this->balance = $this->balance + $totalprice;
          	$accountID = $this->getID();
-		  //making sure to let the database do de logic of the addion
+		  //making sure to let the database do de logic of the addion with sql
          	$sql = "UPDATE Accounts SET Balance = (SELECT Balance FROM Accounts WHERE AccountID = $accountID) + $totalprice WHERE AccountID = $accountID"; 
           
           	$classSql = new Sql;
@@ -75,6 +75,7 @@ class Account  {
         public function removeFromBalance($totalprice){
         	$this->balance = $this->balance - $totalprice;
           	$accountID = $this->getID();
+          	//making sure to let the database do de logic of the reduction with sql
            	$sql = "UPDATE Accounts SET Balance = (SELECT Balance FROM Accounts WHERE AccountID = $accountID) - $totalprice WHERE AccountID = $accountID"; 
               
             	$classSql = new Sql;
