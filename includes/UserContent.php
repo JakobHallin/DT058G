@@ -23,14 +23,16 @@ $size = $user->getSize();
 ?> 
 <div class="user">
 <h1> <?php echo $username ?> </h1>
-<h2> <?php echo "Number of accounts " .$size ."</br>"; ?> </h2> 
+<h2> <?php echo "Number of accounts " .$size; ?> </h2>
+<br>
 <?php
 for ($i=0; $i<$size; $i++){
+	
 	?>
-		<div id="accountBox">
-        	<button type="button" class="collapsible"> 
-        	<?php
-        	$acountID = $user->getAccountID($i);
+		<div id="accountBox" name="<?php echo "Account " . $i+1;?>" >
+        <button type="button" class="collapsible"> 
+        <?php
+        $acountID = $user->getAccountID($i);    	
 		$acountinfo = "AccountID: ". $acountID. " Balance: ". $user->getBalance($i);
 		$stockSize = $user->getAmountStocks($i);
 		$amountStock = " Amount of diffrent stocks:". $stockSize;
@@ -49,8 +51,10 @@ for ($i=0; $i<$size; $i++){
 			}
 			?>
 			<form id="acount" method="post" action="<?=$_SERVER['PHP_SELF'];?>"> 
-				<p> buy stock id: <input type='number' name='InputStockID' id='InputStockID'> 
-				amount: <input type='number' name='InputStockAmount' id='InputStockAmount'></p> 
+				<label for="InputStockID"> buy stock id: </label>
+				<input type='number' name='InputStockID' id='InputStockID'> 
+				<label for="amount"> amount: </label> 
+				<input type='number' name='InputStockAmount' id='InputStockAmount'></p> 
 	 			<input type='hidden' id='accountIndex' name='accountIndex' value = <?php echo $i; ?>>	
 	 			<input type='submit' name='addstock' id=addstock value=Buy> 
 	 			<input type='submit' name='sellstock' id=sellstock value=Sell> 
@@ -63,27 +67,7 @@ for ($i=0; $i<$size; $i++){
 }
 ?>
 </div>
-<script>
+<script src="js/userContent.js">
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content */
-var i;
-/* making sure if javascript run it starts as hiden */
-var content2 = document.getElementsByClassName("contentHolding");
-     for (i = 0; i < content2.length; i++){
-     content2[i].style.display = "none";
-     }
-var coll = document.getElementsByClassName("collapsible");
 
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}/*
-
-*/
 </script>

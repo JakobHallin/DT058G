@@ -7,7 +7,7 @@ spl_autoload_register(function ($class) {
    
 });
 
-$title = "login";
+
 
 error_reporting(E_ALL);
  //$db = new Db;
@@ -24,12 +24,13 @@ session_start();
 		$result = $classSql->execute($sql);
 		$count = $result->rowCount() ;
 		if ($count == 1){
-		$_SESSION["valid_user"] = session_id();
-		$_SESSION["user"]  = $username;
+		    $_SESSION["valid_user"] = session_id();
+		    $_SESSION["user"]  = $username;
 			header("Location: index.php");
 			exit();
 		}
 	}
+$title = "login";
 ?>
 <!DOCTYPE html>
 <html lang="sv">
@@ -38,28 +39,21 @@ session_start();
 <?php include("includes/header.php"); ?>
 	<div class="box">
 	<h2> Logga in </h2>
-	<form id="formid" method="post" action="<?=$_SERVER['PHP_SELF'];?>">
-		<p> Användare:
-		<input type="text" name="user" id="user" autocomplete="off" placeholder="Ange användarnamn" ></p>
-		
-		<p> Lösenord: 
+	<?php //echo "test";  can make error message why login dident work?>
+	<form id="formid" method="post" name="login" action="<?=$_SERVER['PHP_SELF'];?>">
+		<label for="user"> Användare: </label>
+		<input type="text" name="user" id="user" autocomplete="off" placeholder="Ange användarnamn" >
+		<br>
+		<label for="password"> Lösenord: </label>
 		<input type="password" name="pass" id="pass" placeholder="Ange lösenord" >
-		</p>
+		<br>
 		<input type="submit" name="go" id="go" value ="Logg in" >
 		
 	</form>
 	
 	</div>
-	<script>
-		//
-    	// Create eventlistener for 'formid' submit to check for empty fields
-    	document.getElementById("formid").addEventListener("submit", (e) => {
-			if(document.getElementById("user").value == "" || document.getElementById("pass").value == ""){
-				e.preventDefault();
-				return false;
-			}
-        	return true;
-    	}) 
+	<script src="js/login.js">
+	
 	</script>
 	<?php include("includes/footer.php"); ?>
 </html>

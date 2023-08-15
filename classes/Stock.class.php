@@ -46,7 +46,7 @@ class Stock{
 	  return $this->id;
 	}
 	/**
-	 * add number of the stock
+	 * add number of the stock can also remove if negative
 	 * @param int $number
 	 */
 	public function addAmount($number){

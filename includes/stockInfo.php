@@ -12,13 +12,13 @@
     	?>
     	<div class="table" id = "table"> 
     		<div class="row">
-    			<div class="column">
+    			<div class="column" name="stockID"> 
     			<h4> StockID</h4>
     			</div>
-    			<div class="column">
+    			<div class="column" name="stockname">
     			<h4> StockName</h4>
     			</div>
-    			<div class="column">
+    			<div class="column" name="price">
     			<h4> Price</h4>
     			</div>
     		</div>
@@ -36,13 +36,13 @@
 				$api = new Api;
 				$price = $api->getPrice($shortName)
 				?> 
-				<div class="column">
+				<div class="column" name="stockID">
  					<p> <?php echo $stockID ?></p>
  				</div>
- 				<div class="column">
+ 				<div class="column" name="stockname">
 					<p> <?php echo $stockName ?></p>
 				</div>
-				<div class="price" id="<?php echo $shortName; ?>">
+				<div class="column" id="<?php echo $shortName ; ?>" name="price">
 					<p> <?php echo $price; ?></p>
 				</div>
 			</div>

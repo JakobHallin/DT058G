@@ -40,9 +40,7 @@ class Account  {
         public function setBalance($n) {  
            	$this->balance = $n;
         }
-        public function addStock($stock) {  
-            	array_push($this->holding, $stock);
-         }
+       
          public function getID(){
            	return $this->id;
          }
@@ -52,6 +50,11 @@ class Account  {
          }
          public function getHolding(){
          	return $this->holding;
+         }
+         
+         
+         public function addStock($stock) {  
+            	array_push($this->holding, $stock);
          }
          /*
 	  * add balance to the account
@@ -87,7 +90,7 @@ class Account  {
 	 * @param int $stockID		
 	 * @param int $stockAmount
 	 */
-        public function updateStockHolding($stockID , $stockAmount){
+        public function updateStockHolding($stockID , $stockAmount){ //deta kanske borde
         	$accountID = $this->getID();
 		
         	$sql = "UPDATE Stock SET Amount = $stockAmount WHERE StocksID = $stockID AND AccountID = $accountID "; 
@@ -106,9 +109,9 @@ class Account  {
             	$classSql = new Sql;
 	 	$stmt = $classSql->insert($sql, $StockId, $id, $amount);
         }            
-           public function changeHolding($index, $amount){ //bra
+           public function changeHolding($index, $amount){ //amount can be negativ
            
-           	$this->holding[$index]->addAmount($amount);
+           	$this->holding[$index]->addAmount($amount); //can add and remove
                	$stockAmount = $this->holding[$index]->getAmount(); 
                	$stockID = $this->holding[$index]->getID();
               

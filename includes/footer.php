@@ -1,6 +1,5 @@
 	</section>
- 	
- 	<div class="footer"> 
- 	<h2> footer </h2>
+    <div class="footer"> 
+ 	<h3> Contact: nonetrackzap@gmail.com </h3>
  	</div>
- 	</body>
+    </body>

@@ -36,6 +36,16 @@ class User{
 	public function getAccountsStockAmount($AccountIndex, $stockIndex){
 		return $this->Accounts[$AccountIndex]->getStockAmount($stockIndex);
 	}
+	public function getAccountID($index){ //bra
+           
+            return $this->Accounts[$index]->getID();
+           
+        }
+        public function getBalance($index){ //bra
+           
+            return $this->Accounts[$index]->getBalance();
+           
+        }
 	
 	public function buyFromAccountStockAmount($AccountIndex, $StockIndex, $amount){
 		
@@ -59,22 +69,15 @@ class User{
  	   public function getAccounts(){
             return $this->Accounts;
            }
-            public function changeBalance($index, $amount){ //bra
+            public function changeBalance($index, $amount){ //rename to setbalance
            
             $this->Accounts[$index]->addBalance($amount);
             
             }
-            public function getAccountID($index){ //bra
-           
-            return $this->Accounts[$index]->getID();
-           
-            }
-             public function getBalance($index){ //bra
-           
-            return $this->Accounts[$index]->getBalance();
-           
-            }
-      	//onödig finns inte i respondibale
+          
+  	/*
+  	 *the user want to see if the stock exist
+  	 */    	
   	public function stockExist($id){
   		$sql = "Select * FROM AllStocks WHERE StocksID= $id";
   		$classSql = new Sql;
