@@ -1,4 +1,10 @@
 <?php
+/*
+ * @author Jakob Hallin
+ * Kurs: DT058G, Webbprogrammering
+ * Projekt: Hemsida med simulering av handel med aktier
+ * @brief login sidan
+ */
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -34,27 +40,28 @@ $title = "login";
 ?>
 <!DOCTYPE html>
 <html lang="sv">
+<!--head-->
 <?php include("includes/head.php"); ?>
-
-<?php include("includes/header.php"); ?>
-	<div class="box">
-	<h2> Logga in </h2>
-	<?php //echo "test";  can make error message why login dident work?>
-	<form id="formid" method="post" name="login" action="<?=$_SERVER['PHP_SELF'];?>">
-		<label for="user"> Användare: </label>
-		<input type="text" name="user" id="user" autocomplete="off" placeholder="Ange användarnamn" >
-		<br>
-		<label for="password"> Lösenord: </label>
-		<input type="password" name="pass" id="pass" placeholder="Ange lösenord" >
-		<br>
-		<input type="submit" name="go" id="go" value ="Logg in" >
-		
-	</form>
+<!--body-->
+    <!--header-->
+    <?php include("includes/header.php"); ?>
+    <!--content-->
+	    <div class="box">
+	        <h2> Logga in </h2>
+	        <form id="formid" method="post" name="login" action="<?=$_SERVER['PHP_SELF'];?>">
+		        <label for="user"> Användare: </label>
+		        <input type="text" name="user" id="user" autocomplete="off" placeholder="Ange användarnamn" >
+		        <br>
+		        <label for="password"> Lösenord: </label>
+		        <input type="password" name="pass" id="pass" placeholder="Ange lösenord" >
+		        <br>
+		        <input type="submit" name="go" id="go" value ="Logg in" >
+		    </form>
 	
-	</div>
-	<script src="js/login.js">
-	
-	</script>
+	    </div>
+	    <script src="js/login.js">
+	    </script>
+	<!--footer-->
 	<?php include("includes/footer.php"); ?>
 </html>
 

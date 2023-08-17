@@ -1,6 +1,8 @@
 <?php
-/*
- * resposnibale for database connection
+/**
+ * class Db
+ * responsibility for database connection
+ * @author Jakob Hallin
  */
 class Db{
 
@@ -12,7 +14,10 @@ class Db{
 	//private $con;
 	//private $apikey= "87dc9fae84c01694a27ab719891dce48";
 	
-	
+	/**
+	 * connects to database returns connection
+	 * @return PDO
+	 */
 	public function connect() {
 		$con =  new PDO("mysql:host=".$this->host.";dbname=".$this->db, $this->user, $this->pass);
 		$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);	
@@ -20,11 +25,7 @@ class Db{
 		 return $con;
 	
 	}
-	/*osäker
-	public function close($con) 
-		$con->close();
-	}
-	*/
+	
 }
 	
 ?>

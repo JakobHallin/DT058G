@@ -1,9 +1,14 @@
 <?php
-/*
- * resposnibale for sql quarys
+/**
+ * class Sql
+ * responsibility for sql quarys
+ * @author jakob Hallin
  */
 class Sql{
-
+    /**
+     * prepares and execute sql quaries
+     * @return $stmt 
+     */
 	public function execute($sql){
 			//$con = $this->con;
 			$db = new Db;
@@ -13,6 +18,9 @@ class Sql{
 			return $stmt;
 	}	
 		
+	/**
+     * prepares and execute sql quaries to statment to insert
+     */
 	public function insert($sql, $arg1, $arg2, $arg3){
 		$db = new Db;
 		$con = $db->connect();

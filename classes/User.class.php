@@ -1,7 +1,9 @@
 <?php
 
-/*
- * respondibale for accounts
+/**
+ * class User
+ * responsibility for accounts
+ * @author Jakob Hallin
  */
 class User{
    
@@ -40,41 +42,61 @@ class User{
            
             return $this->Accounts[$index]->getID();
            
-        }
-        public function getBalance($index){ //bra
+    }
+    public function getBalance($index){ //bra
            
             return $this->Accounts[$index]->getBalance();
            
-        }
+    }
 	
-	public function buyFromAccountStockAmount($AccountIndex, $StockIndex, $amount){
+	/** 
+	 * buys from account with index $AccountIndex with stockid $StockID and amount 
+	 * @param int $AccountIndex
+	 * @param int $StockID
+	 * @param int $amount
+	 */
+	public function buyFromAccountStockAmount($AccountIndex, $StockID, $amount){ //bör vara stock ID
 		
-		$this->Accounts[$AccountIndex]->buyStock($StockIndex, $amount);
+		$this->Accounts[$AccountIndex]->buyStock($StockId, $amount);
 	
 	}
-	public function sellFromAccountStockAmount($AccountIndex, $StockIndex, $amount){
+	/** 
+	 * sell from account with index $AccountIndex with stockid $StockID and amount 
+	 * @param int $AccountIndex
+	 * @param int $StockID
+	 * @param int $amount
+	 */
+	public function sellFromAccountStockAmount($AccountIndex, $StockID, $amount){
 		
-		$this->Accounts[$AccountIndex]->sellStock($StockIndex, $amount);
+		$this->Accounts[$AccountIndex]->sellStock($StockID, $amount);
 
 	}
 	 
-	       
-           public function addAccount($Add) {  // a public function (default)
+	/**
+	 * add account to this user
+	 * $paragram Account
+	 */
+    public function addAccount($Add) {  // a public function (default)
 
-            array_push($this->Accounts, $Add);
+        array_push($this->Accounts, $Add);
     
-           }
+    }
          
        
- 	   public function getAccounts(){
-            return $this->Accounts;
-           }
-            public function changeBalance($index, $amount){ //rename to setbalance
+ 	public function getAccounts(){
+        return $this->Accounts;
+    }
+    /**
+     * change balance of account
+     * @param int $index
+     * @param int $amount
+     */
+    public function changeBalance($index, $amount){ //rename to setbalance
            
-            $this->Accounts[$index]->addBalance($amount);
+        $this->Accounts[$index]->addBalance($amount);
             
-            }
-          
+    }
+      
   	/*
   	 *the user want to see if the stock exist
   	 */    	
@@ -95,7 +117,6 @@ class User{
   	 	return false;
   	 }
 	
-	//return $count;
 	}  	     
           
           

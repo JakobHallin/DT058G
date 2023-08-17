@@ -1,7 +1,8 @@
 <?php
 /**
  * class Stock
- * responsibale for stock
+ * responsibility for stock
+ * @author Jakob Hallin
  */
 class Stock{
 	private $amount; //int

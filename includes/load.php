@@ -24,6 +24,7 @@ function load(){
             header("Location: login.php");
             exit;
         }
+     
         
     }
     else {

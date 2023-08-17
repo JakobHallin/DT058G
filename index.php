@@ -1,15 +1,20 @@
 <?php
 /*
- *Jakob Hallin, jaha2100, TDATG
- *DT058G, Webbprogrammering
- * description
+ * @authorJakob Hallin
+ * Kurs: DT058G, Webbprogrammering
+ * Projekt: Hemsida med simulering av handel med aktier
+ * @brief Index sidan
  */
 declare(strict_types=1); // Check for type cast problems
 error_reporting(E_ALL); // Report and exit for all errors
 require ("includes/load.php");
 
 
+
 $username = $_SESSION["user"];
+
+
+
 $title = "hem";
 spl_autoload_register(function ($class) {
     include 'classes/' . $class . '.class.php';
@@ -18,11 +23,16 @@ spl_autoload_register(function ($class) {
 ?>
 <!DOCTYPE html>
 <html>
-	<?php include("includes/head.php"); //head ?>
-    	<?php include("includes/header.php"); //header ?>
-        
+    <!--head-->
+	<?php include("includes/head.php"); ?>
+    <!--body-->
+        <!--header-->
+        <?php include("includes/header.php"); //header ?>
+        <!--content usercontent-->
+        <?php echo  $_SESSION["user"];?>
         <?php include ("includes/UserContent.php"); //content ?>
-  	<?php  include ("includes/stockInfo.php"); //content ?>
+        <!--content stockifo-->
+  	    <?php  include ("includes/stockInfo.php"); //content ?>
  	
 	<div class="container"> 	
  		<!--refresh the browser-->

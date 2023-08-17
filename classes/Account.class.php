@@ -1,102 +1,95 @@
 <?php
 /**
  * class account
- * responsibale for account buying selling stocks
+ * responsibility for account buying selling stocks
+ * @authur Jakob Hallin
  */
 class Account  {
   
    	private $con; //connection to database
    	private $id; //int
-    	private $balance;  //float
-    	private $holding = []; // array
-		/** 
-		 * constructor
-		 */
-     	function __construct($id, $balance) {
-			$this->id = $id;          
-          		$this->balance= $balance;
-			//get all the stocks from the database that are related to this account 
-			$sql = "SELECT * FROM Stock WHERE AccountID= '" .$id ."'";
-	 		$classSql = new Sql;
-	 		$stmt = $classSql->execute($sql);
-	 		 
-			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	      		$this->addStock( new Stock($row['StocksID'],  $row["Amount"]));  
-    			}
-        	}  
-	/**
-	 * get size
-	 * @return int
+    private $balance;  //float
+    private $holding = []; // array
+	/** 
+	 * constructor
 	 */
-        public function getSize(){
-		return sizeof($this->holding);
-		} 
-      	public function getStockID($index){
-      		return $this->holding[$index]->getID();
-      	}
-      	public function getStockAmount($index){
-      		return $this->holding[$index]->getAmount();
-      	}
-        public function setBalance($n) {  
-           	$this->balance = $n;
+    function __construct($id, $balance) {
+	    $this->id = $id;          
+        $this->balance= $balance;
+	    //get all the stocks from the database that are related to this account 
+	    $sql = "SELECT * FROM Stock WHERE AccountID= '" .$id ."'";
+	    $classSql = new Sql;
+	    $stmt = $classSql->execute($sql);
+	 		 
+	    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+	      $this->addStock( new Stock($row['StocksID'],  $row["Amount"]));  
         }
+    }  
+	
+    public function getSize(){
+		return sizeof($this->holding);
+	} 
+    public function getStockID($index){
+      		return $this->holding[$index]->getID();
+    }
+    public function getStockAmount($index){
+      	return $this->holding[$index]->getAmount();
+    }
+    public function setBalance($n) {  
+       	$this->balance = $n;
+    }
        
-         public function getID(){
-           	return $this->id;
-         }
-         
-         public function getBalance(){
-           return $this->balance;
-         }
-         public function getHolding(){
-         	return $this->holding;
-         }
-         
-         
-         public function addStock($stock) {  
-            	array_push($this->holding, $stock);
-         }
-         /*
-	  * add balance to the account
-	  * @param float $totalprice
-	  */
-         public function addBalance($totalprice){ 
-         	$this->balance = $this->balance + $totalprice;
-         	$accountID = $this->getID();
-		  //making sure to let the database do de logic of the addion with sql
-         	$sql = "UPDATE Accounts SET Balance = (SELECT Balance FROM Accounts WHERE AccountID = $accountID) + $totalprice WHERE AccountID = $accountID"; 
+    public function getID(){
+       	return $this->id;
+    }
+    public function getBalance(){
+       return $this->balance;
+    }
+    public function getHolding(){
+     	return $this->holding;
+    }
+    public function addStock($stock) {  
+        array_push($this->holding, $stock);
+    }
+    /*
+	 * add balance to the account
+	 * @param float $totalprice
+	 */
+    public function addBalance($totalprice){ 
+     	$this->balance = $this->balance + $totalprice;
+     	$accountID = $this->getID();
+		//making sure to let the database do de logic of the addion with sql
+     	$sql = "UPDATE Accounts SET Balance = (SELECT Balance FROM Accounts WHERE AccountID = $accountID) + $totalprice WHERE AccountID = $accountID"; 
           
-          	$classSql = new Sql;
+      	$classSql = new Sql;
 	 	$stmt = $classSql->execute($sql);
-          
-         }
+    }
           
 	/**
 	 * remove balance to the account
 	 * @param float $totalprice
 	 */
-        public function removeFromBalance($totalprice){
-        	$this->balance = $this->balance - $totalprice;
-          	$accountID = $this->getID();
-          	//making sure to let the database do de logic of the reduction with sql
-           	$sql = "UPDATE Accounts SET Balance = (SELECT Balance FROM Accounts WHERE AccountID = $accountID) - $totalprice WHERE AccountID = $accountID"; 
-              
-            	$classSql = new Sql;
+    public function removeFromBalance($totalprice){
+        $this->balance = $this->balance - $totalprice;
+        $accountID = $this->getID();
+        //making sure to let the database do de logic of the reduction with sql
+        $sql = "UPDATE Accounts SET Balance = (SELECT Balance FROM Accounts WHERE AccountID = $accountID) - $totalprice WHERE AccountID = $accountID"; 
+        $classSql = new Sql;
 	 	$stmt = $classSql->execute($sql);
 
-        }
+    }
 	/**
 	 * update the sockholding //mabye change name to change
 	 * @param int $stockID		
 	 * @param int $stockAmount
 	 */
-        public function updateStockHolding($stockID , $stockAmount){ //deta kanske borde
-        	$accountID = $this->getID();
+    public function updateStockHolding($stockID , $stockAmount){ //deta kanske borde
+        $accountID = $this->getID();
 		
-        	$sql = "UPDATE Stock SET Amount = $stockAmount WHERE StocksID = $stockID AND AccountID = $accountID "; 
-        	$classSql = new Sql;
+        $sql = "UPDATE Stock SET Amount = $stockAmount WHERE StocksID = $stockID AND AccountID = $accountID "; 
+        $classSql = new Sql;
 	 	$stmt = $classSql->execute($sql);
-        }
+    }
 		/**
 		 * insert new stock to account
 		 * @param int $stockID
@@ -156,9 +149,9 @@ class Account  {
                        
                     //måste checka om det funkar om balance är störe än prep * amount
                     
-                        	$this->changeHolding($key, $amount);
+                        $this->changeHolding($key, $amount);
                 	
-                	/* updateBalance() */
+                	    /* ta bort balans */
                   		$this->removeFromBalance($prep);
                         
                         }
@@ -202,15 +195,15 @@ class Account  {
 				$curentAmount = $row['Amount'];
 				}
             	if ($curentAmount >= $amount){
-            	 //sql add balance
-            		$price = $this->getPrice($StockID);     //bra 
+            	    //get price
+            		$price = $this->getPrice($StockID);     
   					$totalPrice = $price * $amount; 
   			
-  			$this->addBalance($totalPrice);
+  			        $this->addBalance($totalPrice);
   			          	 
             	 	//remove ammount of stock from StockID 
             	 	
-  			$newAmount  = $curentAmount - $amount;
+  			        $newAmount  = $curentAmount - $amount;
             	 	
             	 	$this->updateStockHolding($StockID , $newAmount);
             	 	foreach($this->holding as $key => $value) //blir stock 
