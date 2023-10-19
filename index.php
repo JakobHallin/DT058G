@@ -30,22 +30,12 @@ spl_autoload_register(function ($class) {
         <?php include("includes/header.php"); //header ?>
         <!--content usercontent-->
         
+        
         <?php include ("includes/UserContent.php"); //content ?>
         <!--content stockifo-->
   	    <?php  include ("includes/stockInfo.php"); //content ?>
  	
-	<div class="container"> 	
- 		<!--refresh the browser-->
- 		<div class= "refreshpage">
- 			<button onClick="window.location.reload();">Refresh Page</button>
- 		</div>
- 		<!--logout the user-->
- 		<div class="logout">
- 			<form method="post" action="<?=$_SERVER['PHP_SELF'];?>">
-        			<input type="submit" name="leave" id="leave" value="Log Out">
-    			</form>
-    		</div>
-    	</div>
+	
     	
     	
     	<?php include("includes/footer.php"); //footer ?>

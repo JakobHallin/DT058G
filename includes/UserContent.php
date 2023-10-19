@@ -22,7 +22,7 @@ if(isset($_REQUEST["sellstock"])){
 $size = $user->getSize();
 ?> 
 <div class="user">
-<h1> <?php echo $username ?> </h1>
+<h1> <?php echo $username ?>  </h1>
 <h2> <?php echo "Number of accounts " .$size; ?> </h2>
 <br>
 <?php
