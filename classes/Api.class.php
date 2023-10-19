@@ -5,7 +5,7 @@
  * @authur Jakob Hallin
  */
 class Api{
-	private $apikey = "87dc9fae84c01694a27ab719891dce48";
+	private $apikey = "";
 	
 	/**
 	 * get the value of the stock and returns it
