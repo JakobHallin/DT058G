@@ -29,7 +29,7 @@ spl_autoload_register(function ($class) {
         <!--header-->
         <?php include("includes/header.php"); //header ?>
         <!--content usercontent-->
-        <?php echo  $_SESSION["user"];?>
+        
         <?php include ("includes/UserContent.php"); //content ?>
         <!--content stockifo-->
   	    <?php  include ("includes/stockInfo.php"); //content ?>
