@@ -12,7 +12,7 @@ class Db{
 	private $pass = "DatabasTest";
 	private $db = "hallin_techwebprojekt";
 	//private $con;
-	//private $apikey= "87dc9fae84c01694a27ab719891dce48";
+	
 	
 	/**
 	 * connects to database returns connection
